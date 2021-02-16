@@ -1,6 +1,7 @@
 /run/numberOfThreads 1
-/control/verbose 2
-/run/verbose 2
+#/control/verbose 2
+#/run/verbose 2
+#/tracking/verbose 2
 
 ############################################
 
@@ -9,12 +10,10 @@
 
 #/IonTrack/stepMax 10 nm
 
-#/IonTrack/phys/addPhysics dna
-#/IonTrack/phys/addPhysics dna_opt1
 #/IonTrack/phys/addPhysics dna_opt2
-#/IonTrack/phys/addPhysics dna_opt3
-#/IonTrack/phys/addPhysics dna_opt4
-#/IonTrack/phys/addPhysics dna_sta_opt2 # there is no this list on cluster
+
+# there is no sta list on cluster
+#/IonTrack/phys/addPhysics dna_sta_opt2 
 
 #/process/em/pixe true
 #/process/em/fluo true
@@ -25,4 +24,3 @@
 ############################################
 
 /run/initialize
-#/tracking/verbose 2

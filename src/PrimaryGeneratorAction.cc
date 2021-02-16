@@ -63,8 +63,7 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
   G4double x0=0;
   if (G4UniformRand()<0.5) { x0=fvertex_x; }
-  else { x0=-fvertex_x; }
-  fParticleGun->GeneratePrimaryVertex(anEvent); 
+  else { x0=-fvertex_x; } 
   const DetectorConstruction* Detector
       = static_cast<const DetectorConstruction*>
         (G4RunManager::GetRunManager()->GetUserDetectorConstruction());
