@@ -23,11 +23,6 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file runAndEvent/RE03/RE03.cc
-/// \brief Main program of the runAndEvent/RE03 example
-//
-//
-//
 
 #include "G4Types.hh"
 
@@ -49,61 +44,39 @@
 
 int main(int argc,char** argv)
 {
- // Instantiate G4UIExecutive if there are no arguments (interactive mode)
- G4UIExecutive* ui = nullptr;
- if ( argc == 1 ) {
-   ui = new G4UIExecutive(argc, argv);
- }
+  G4UIExecutive* ui = nullptr;
+  if (argc == 1) ui = new G4UIExecutive(argc,argv);
 
- // Construct the run manager
- //
-#ifdef G4MULTITHREADED
- G4MTRunManager * runManager = new G4MTRunManager;
- runManager->SetNumberOfThreads(4);
-#else
- G4RunManager * runManager = new G4RunManager;
-#endif
+  #ifdef G4MULTITHREADED
+  G4MTRunManager * runManager = new G4MTRunManager;
+  runManager->SetNumberOfThreads(4);
+  #else
+  G4RunManager * runManager = new G4RunManager;
+  #endif
 
- // Activate UI-command base scorer
- G4ScoringManager * scManager = G4ScoringManager::GetScoringManager();
- scManager->SetVerboseLevel(1);
+  // Activate UI-command base scorer
+  G4ScoringManager * scManager = G4ScoringManager::GetScoringManager();
+  scManager->SetVerboseLevel(1);
 
- // Set mandatory initialization classes
- runManager->SetUserInitialization(new DetectorConstruction());
- runManager->SetUserInitialization(new PhysicsList());
- runManager->SetUserInitialization(new ActionInitialization());
-  
- // Visualization manager
- G4VisManager* visManager = new G4VisExecutive;
- visManager->Initialize();
+  runManager->SetUserInitialization(new DetectorConstruction());
+  runManager->SetUserInitialization(new PhysicsList());
+  runManager->SetUserInitialization(new ActionInitialization());
 
- // Initialize G4 kernel
- //runManager->Initialize();
-  
- // Get the pointer to the User Interface manager
- //
- G4UImanager* UImanager = G4UImanager::GetUIpointer();  
+  G4VisManager* visManager = nullptr; 
+  G4UImanager* UImanager = G4UImanager::GetUIpointer();
+  if (ui) {
+    visManager = new G4VisExecutive;
+    visManager->Initialize();
+    UImanager->ApplyCommand("/control/execute ../vis.mac");
+    ui->SessionStart();
+    delete ui;
+  } 
+  else {
+    G4String command = "/control/execute ";
+    G4String fileName = argv[1];
+    UImanager->ApplyCommand(command+fileName);
+  }
 
- if (ui)   // Define UI session for interactive mode
- {
-   UImanager->ApplyCommand("/control/execute ../vis.mac");
-   ui->SessionStart();
-   delete ui;
- }
- else           // Batch mode
- { 
-   G4String command = "/control/execute ";
-   G4String fileName = argv[1];
-   UImanager->ApplyCommand(command+fileName);
- }
-
-  // Job termination
-  // Free the store: user actions, physics_list and detector_description are
-  //                 owned and deleted by the run manager, so they should not
-  //                 be deleted in the main() program !
-
- delete visManager;
- delete runManager;
-
- return 0;
+  delete visManager;
+  delete runManager;
 }

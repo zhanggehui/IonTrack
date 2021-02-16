@@ -44,7 +44,7 @@ class DetectorMessenger: public G4UImessenger
     
   private:
     DetectorConstruction*      fDetector;
-    G4UIdirectory*             fFilmTrackDir;
+    G4UIdirectory*             fIonTrackDir;
     G4UIdirectory*             fDetDir;
     G4UIcmdWithADoubleAndUnit* fFilmXYCmd;
     G4UIcmdWithADoubleAndUnit* fFilmZCmd;

@@ -29,47 +29,48 @@
 #include "G4UIdirectory.hh"
 #include "G4UIcmdWithADoubleAndUnit.hh"
 
-DetectorMessenger::DetectorMessenger(DetectorConstruction* Det)
-: G4UImessenger(), fDetector(Det),
-  fFilmTrackDir(0), fDetDir(0),
-  fFilmXYCmd(0), fFilmZCmd(0)
-{ 
-  fFilmTrackDir = new G4UIdirectory("/FilmTrack/");
-  fFilmTrackDir->SetGuidance("UI commands specific to simulate FilmTrack");
-  
-  fDetDir = new G4UIdirectory("/FilmTrack/det/");
+DetectorMessenger::DetectorMessenger(DetectorConstruction *Det)
+: G4UImessenger(), fDetector(Det)
+{
+  fIonTrackDir = new G4UIdirectory("/IonTrack/");
+  fIonTrackDir->SetGuidance("UI commands specific to simulate IonTrack");
+
+  fDetDir = new G4UIdirectory("/IonTrack/det/");
   fDetDir->SetGuidance("Detector construction commands");
-    
-  fFilmXYCmd = new G4UIcmdWithADoubleAndUnit("/FilmTrack/det/setFilmXY",this);
+
+  fFilmXYCmd = new G4UIcmdWithADoubleAndUnit("/IonTrack/det/setFilmXY", this);
   fFilmXYCmd->SetGuidance("Set XY of the Film");
-  fFilmXYCmd->SetParameterName("FilmX",false);
+  fFilmXYCmd->SetParameterName("FilmX", false);
   fFilmXYCmd->SetRange("FilmX>0.");
   fFilmXYCmd->SetUnitCategory("Length");
   fFilmXYCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
   fFilmXYCmd->SetToBeBroadcasted(false);
-    
-  fFilmZCmd = new G4UIcmdWithADoubleAndUnit("/FilmTrack/det/setFilmZ",this);
+
+  fFilmZCmd = new G4UIcmdWithADoubleAndUnit("/IonTrack/det/setFilmZ", this);
   fFilmZCmd->SetGuidance("Set Z of the Film");
-  fFilmZCmd->SetParameterName("FilmZ",false);
+  fFilmZCmd->SetParameterName("FilmZ", false);
   fFilmZCmd->SetRange("FilmZ>0.");
   fFilmZCmd->SetUnitCategory("Length");
-  fFilmZCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+  fFilmZCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
   fFilmZCmd->SetToBeBroadcasted(false);
-    
 }
 
 DetectorMessenger::~DetectorMessenger()
 {
   delete fFilmZCmd;
   delete fFilmXYCmd;
-  delete fDetDir;  
-  delete fFilmTrackDir;
+  delete fDetDir;
+  delete fIonTrackDir;
 }
 
-void DetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
-{ 
-  if ( command == fFilmXYCmd )
-  {fDetector->SetFilmXY(fFilmXYCmd->GetNewDoubleValue(newValue));}
-  if ( command == fFilmZCmd )
-  {fDetector->SetFilmZ(fFilmZCmd->GetNewDoubleValue(newValue));} 
+void DetectorMessenger::SetNewValue(G4UIcommand *command, G4String newValue)
+{
+  if (command == fFilmXYCmd)
+  {
+    fDetector->SetFilmXY(fFilmXYCmd->GetNewDoubleValue(newValue));
+  }
+  if (command == fFilmZCmd)
+  {
+    fDetector->SetFilmZ(fFilmZCmd->GetNewDoubleValue(newValue));
+  }
 }

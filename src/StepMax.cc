@@ -30,8 +30,8 @@
 #include "G4TransportationProcessType.hh"
 
 StepMax::StepMax(PhysicsListMessenger* mess)
-: G4VEmProcess("UserMaxStep", fGeneral),fMessenger(mess),
-  fMaxChargedStep(DBL_MAX),fInitialised(false)
+: G4VEmProcess("UserMaxStep", fGeneral), fMessenger(mess),
+  fMaxChargedStep(DBL_MAX), fInitialised(false)
 {
   SetProcessSubType(static_cast<G4int>(STEP_LIMITER));  
 }
@@ -66,10 +66,9 @@ void StepMax::BuildPhysicsTable(const G4ParticleDefinition&)
 void StepMax::InitialiseProcess(const G4ParticleDefinition*)
 {}
 
-G4double 
-StepMax::PostStepGetPhysicalInteractionLength(const G4Track&,
-                                              G4double,
-                                              G4ForceCondition* condition)
+G4double StepMax::PostStepGetPhysicalInteractionLength(const G4Track&,
+                                                       G4double,
+                                                       G4ForceCondition* condition)
 {
   // condition is set to "Not Forced"
   *condition = NotForced;
@@ -82,4 +81,3 @@ G4VParticleChange* StepMax::PostStepDoIt(const G4Track& aTrack, const G4Step&)
   aParticleChange.Initialize(aTrack);
   return &aParticleChange;
 }
-

@@ -30,26 +30,26 @@
 #include "G4VUserDetectorConstruction.hh"
 #include "globals.hh"
 
-class G4Material;
 class DetectorMessenger;
+class G4Material;
 
 class DetectorConstruction : public G4VUserDetectorConstruction
 {
   public:
     DetectorConstruction();
-    ~DetectorConstruction();
+    virtual ~DetectorConstruction();
     
     virtual G4VPhysicalVolume* Construct();
   
-    inline void SetFilmXY(G4double);
-    inline void SetFilmZ (G4double);
+    void SetFilmXY(G4double val) {fFilmXY = val;};
+    void SetFilmZ (G4double val) {fFilmZ = val;};
     
     G4double GetFilmXY() const {return fFilmXY;};
     G4double GetFilmZ() const {return fFilmZ ;};
 
   private:
-    G4Material*        fFilmMaterial;
     DetectorMessenger* fDetectorMessenger;
+    G4Material*        fFilmMaterial;
     G4double           fFilmXY, fFilmZ;
 };
 

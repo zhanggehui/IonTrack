@@ -25,6 +25,7 @@
 //
 
 #include "PrimaryGeneratorAction.hh"
+#include "PrimaryGeneratorMessenger.hh"
 #include "DetectorConstruction.hh"
 #include "G4RunManager.hh"
 #include "G4Event.hh"
@@ -32,13 +33,15 @@
 #include "G4ParticleDefinition.hh"
 #include "G4ParticleGun.hh"
 #include "G4SystemOfUnits.hh"
+#include "Randomize.hh"
 
 PrimaryGeneratorAction::PrimaryGeneratorAction()
-: G4VUserPrimaryGeneratorAction()
+: G4VUserPrimaryGeneratorAction(), fvertex_x(0)
 {
   G4int n_particle = 1;
   fParticleGun = new G4ParticleGun(n_particle);
   SetDefaultKinematic();
+  fGunMessenger = new PrimaryGeneratorMessenger(this);
 }
 
 PrimaryGeneratorAction::~PrimaryGeneratorAction()
@@ -47,11 +50,9 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction()
 }
 
 void PrimaryGeneratorAction::SetDefaultKinematic()
-{    
-  // default ParticleGun Setting
+{ 
   G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-  G4ParticleDefinition* particle
-                    = particleTable->FindParticle("e-");
+  G4ParticleDefinition* particle = particleTable->FindParticle("e-");
   fParticleGun->SetParticleDefinition(particle);
   fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,-1.));
   fParticleGun->SetParticleEnergy(1.*MeV);
@@ -60,13 +61,14 @@ void PrimaryGeneratorAction::SetDefaultKinematic()
 
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
+  G4double x0=0;
+  if (G4UniformRand()<0.5) { x0=fvertex_x; }
+  else { x0=-fvertex_x; }
+  fParticleGun->GeneratePrimaryVertex(anEvent); 
   const DetectorConstruction* Detector
       = static_cast<const DetectorConstruction*>
         (G4RunManager::GetRunManager()->GetUserDetectorConstruction());
   G4double z0 = (Detector->GetFilmZ())/2;
-  fParticleGun->SetParticlePosition(G4ThreeVector(0., 0., z0));
+  fParticleGun->SetParticlePosition(G4ThreeVector(x0, 0., z0));
   fParticleGun->GeneratePrimaryVertex(anEvent); 
 }
-
-void PrimaryGeneratorAction::Setdistance(G4double)
-{}

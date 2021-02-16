@@ -28,17 +28,21 @@
 #include "PhysicsListMessenger.hh"
 
 #include "G4EmDNAPhysics.hh"
-#include "G4EmDNAPhysics_option1.hh"
 #include "G4EmDNAPhysics_option2.hh"
-#include "G4EmDNAPhysics_option3.hh"
 #include "G4EmDNAPhysics_option4.hh"
-//#include "G4EmDNAPhysics_stationary_option2.hh"
+#include "G4EmDNAPhysics_option6.hh"
+
+#include "G4EmDNAPhysics_stationary.hh"
+#include "G4EmDNAPhysics_stationary_option2.hh"
+#include "G4EmDNAPhysics_stationary_option4.hh"
+#include "G4EmDNAPhysics_stationary_option6.hh"
 
 #include "StepMax.hh"
 #include "G4UnitsTable.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4UserSpecialCuts.hh"
 #include "G4ProcessManager.hh"
+
 // particles
 #include "G4BosonConstructor.hh"
 #include "G4LeptonConstructor.hh"
@@ -49,13 +53,15 @@
 #include "G4ShortLivedConstructor.hh"
 #include "G4DNAGenericIonsManager.hh"
 
-PhysicsList::PhysicsList() 
-: G4VModularPhysicsList(), fMessenger(0)
+PhysicsList::PhysicsList() : G4VModularPhysicsList()
 {
   fMessenger = new PhysicsListMessenger(this);
+  
   // EM physics
   fEmName="dna_opt2";
   fEmPhysicsList = new G4EmDNAPhysics_option2();
+
+  SetDefaultCutValue(1*nm);  
   SetVerboseLevel(1);
 }
 
@@ -134,32 +140,41 @@ void PhysicsList::AddPhysicsList(const G4String& name)
     delete fEmPhysicsList;
     fEmPhysicsList = new G4EmDNAPhysics();
   } 
-  else if (name == "dna_opt1") {
-    fEmName = name;
-    delete fEmPhysicsList;
-    fEmPhysicsList = new G4EmDNAPhysics_option1();
-  }
   else if (name == "dna_opt2") {
     fEmName = name;
     delete fEmPhysicsList;
     fEmPhysicsList = new G4EmDNAPhysics_option2();
-  }
-  else if (name == "dna_opt3") {
-    fEmName = name;
-    delete fEmPhysicsList;
-    fEmPhysicsList = new G4EmDNAPhysics_option3();
   }
   else if (name == "dna_opt4") {
     fEmName = name;
     delete fEmPhysicsList;
     fEmPhysicsList = new G4EmDNAPhysics_option4();
   }
-  /*else if (name == "dna_sta_opt2") {
+  else if (name == "dna_opt6") {
+    fEmName = name;
+    delete fEmPhysicsList;
+    fEmPhysicsList = new G4EmDNAPhysics_option6();
+  }
+  else if (name == "dna_stat") {
+    fEmName = name;
+    delete fEmPhysicsList;
+    fEmPhysicsList = new G4EmDNAPhysics_stationary();
+  }
+  else if (name == "dna_stat_opt2") {
     fEmName = name;
     delete fEmPhysicsList;
     fEmPhysicsList = new G4EmDNAPhysics_stationary_option2();
-  }*/
-  
+  }
+  else if (name == "dna_stat_opt4") {
+    fEmName = name;
+    delete fEmPhysicsList;
+    fEmPhysicsList = new G4EmDNAPhysics_stationary_option4();
+  }
+  else if (name == "dna_stat_opt6") {
+    fEmName = name;
+    delete fEmPhysicsList;
+    fEmPhysicsList = new G4EmDNAPhysics_stationary_option6();
+  }
   else {
     G4cout << "PhysicsList::AddPhysicsList: <" << name << ">"
            << " is not defined"

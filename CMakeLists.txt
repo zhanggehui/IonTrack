@@ -2,7 +2,7 @@
 # Setup the project
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(IonTrack)
-set(P_NAME Projects/Stopping_power)
+set(P_NAME Projects/Edep_grid)
 # Edep_grid TR_Track Stopping_power
 
 #----------------------------------------------------------------------------

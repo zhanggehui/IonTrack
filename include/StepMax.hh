@@ -38,7 +38,7 @@ class StepMax : public G4VEmProcess
 {
 public:
 
-  StepMax(PhysicsListMessenger* mess);
+  StepMax(PhysicsListMessenger*);
   virtual ~StepMax();
 
   virtual G4bool IsApplicable(const G4ParticleDefinition&);
@@ -57,7 +57,6 @@ public:
   virtual void PrintInfo(){};
 
 private:
-
   PhysicsListMessenger* fMessenger;
   G4double fMaxChargedStep;
   G4bool fInitialised;

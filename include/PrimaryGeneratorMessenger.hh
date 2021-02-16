@@ -43,10 +43,9 @@ class PrimaryGeneratorMessenger: public G4UImessenger
     virtual void SetNewValue(G4UIcommand*, G4String);
     
   private:
-    PrimaryGeneratorAction*    fAction;
-    G4UIdirectory*             fIonTrackDir;
-    G4UIdirectory*             fGunDir;      
-    G4UIcmdWithADoubleAndUnit*        fDistanceCmd;    
+    PrimaryGeneratorAction*      fAction;
+    G4UIdirectory*               fGunDir;      
+    G4UIcmdWithADoubleAndUnit*   fDistanceCmd;    
 };
 
 #endif

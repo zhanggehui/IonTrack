@@ -40,8 +40,8 @@
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
 
-int main(int argc,char** argv) {
-
+int main(int argc,char** argv) 
+{
   G4UIExecutive* ui = nullptr;
   if (argc == 1) ui = new G4UIExecutive(argc,argv);
 
@@ -57,7 +57,6 @@ int main(int argc,char** argv) {
 
   G4VisManager* visManager = nullptr; 
   G4UImanager* UImanager = G4UImanager::GetUIpointer();
-  
   if (ui) {
     visManager = new G4VisExecutive;
     visManager->Initialize();

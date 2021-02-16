@@ -30,26 +30,25 @@
 #include "G4VModularPhysicsList.hh"
 #include "globals.hh"
 
+class G4VPhysicsConstructor;
 class PhysicsListMessenger;
 
 class PhysicsList: public G4VModularPhysicsList
 {
-public:
-  PhysicsList();
-  ~PhysicsList();
+  public:
+    PhysicsList();
+    ~PhysicsList();
 
-  virtual void ConstructParticle();
-  virtual void ConstructProcess();
+    virtual void ConstructParticle();
+    virtual void ConstructProcess();
 
-  void AddPhysicsList(const G4String& name);
-  void AddStepMax();
+    void AddPhysicsList(const G4String& name);
+    void AddStepMax();
 
-private:
-  G4String fEmName;
-  G4VPhysicsConstructor*  fEmPhysicsList;    
-  PhysicsListMessenger*   fMessenger;
-  
+  private:
+    G4VPhysicsConstructor*  fEmPhysicsList;    
+    PhysicsListMessenger*   fMessenger;
+    G4String fEmName; 
 };
 
 #endif
-

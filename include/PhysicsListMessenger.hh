@@ -37,21 +37,19 @@ class G4UIcmdWithADoubleAndUnit;
 
 class PhysicsListMessenger: public G4UImessenger
 {
-public:
-  
-  PhysicsListMessenger(PhysicsList* );
- ~PhysicsListMessenger();
+  public:
+    PhysicsListMessenger(PhysicsList*);
+    ~PhysicsListMessenger();
+      
+    virtual void SetNewValue(G4UIcommand*, G4String);
+    G4double GetMaxChargedStep(){return fMaxChargedStep;};  
     
-  virtual void SetNewValue(G4UIcommand*, G4String);
-  G4double GetMaxChargedStep(){return fMaxChargedStep;};  
-  
-private:
-  PhysicsList*               fPhysicsList;
-  G4UIdirectory*             fPhysDir;        
-  G4UIcmdWithAString*        fListCmd;
-  G4UIcmdWithADoubleAndUnit* fStepMaxCmd;
-  G4double fMaxChargedStep;
+  private:
+    PhysicsList*               fPhysicsList;
+    G4UIdirectory*             fPhysDir;        
+    G4UIcmdWithAString*        fListCmd;
+    G4UIcmdWithADoubleAndUnit* fStepMaxCmd;
+    G4double fMaxChargedStep;
 };
 
 #endif
-

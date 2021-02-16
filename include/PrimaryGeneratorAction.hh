@@ -32,20 +32,24 @@
 
 class G4Event;
 class G4ParticleGun;
+class PrimaryGeneratorMessenger;
 
 class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
   public:
     PrimaryGeneratorAction();    
-   ~PrimaryGeneratorAction();
+    virtual ~PrimaryGeneratorAction();
     
     virtual void GeneratePrimaries(G4Event*);
 
     const G4ParticleGun* GetParticleGun() const {return fParticleGun;};
-    void Setdistance(G4double);
+    void Setdistance(G4double val) {fvertex_x=val/2;};
 
   private:
     void SetDefaultKinematic();
     G4ParticleGun* fParticleGun;
+    PrimaryGeneratorMessenger* fGunMessenger;  
+    G4double fvertex_x;
 };
+
 #endif

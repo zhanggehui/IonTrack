@@ -30,26 +30,23 @@
 #include "G4UIcmdWithADoubleAndUnit.hh"
 
 PrimaryGeneratorMessenger::PrimaryGeneratorMessenger(PrimaryGeneratorAction* Gun)
-:G4UImessenger(), fAction(Gun), fIonTrackDir(0), fGunDir(0), fDistanceCmd(0)
+:G4UImessenger(), fAction(Gun)
 {
-  fIonTrackDir = new G4UIdirectory("/IonTrack/");
-  fIonTrackDir->SetGuidance("UI commands specific to this example");
   fGunDir = new G4UIdirectory("/IonTrack/gun/");
   fGunDir->SetGuidance("gun position control");
   
-  fDistanceCmd = new G4UIcmdWithADoubleAndUnit("/IonTrack/gun/distance",this);
+  fDistanceCmd = new G4UIcmdWithADoubleAndUnit("/IonTrack/gun/distance", this);
   fDistanceCmd->SetGuidance("Distance between two beams");
-  fDistanceCmd->SetParameterName("dis",false);
+  fDistanceCmd->SetParameterName("dis", false);
   fDistanceCmd->SetRange("dis>=0.");
   fDistanceCmd->SetUnitCategory("Length"); 
-  fDistanceCmd->AvailableForStates(G4State_Idle);   
+  fDistanceCmd->AvailableForStates(G4State_PreInit, G4State_Idle); 
 }
 
 PrimaryGeneratorMessenger::~PrimaryGeneratorMessenger()
 {
   delete fDistanceCmd;
   delete fGunDir; 
-  delete fIonTrackDir; 
 }
 
 void PrimaryGeneratorMessenger::SetNewValue(G4UIcommand* command, G4String newValue)

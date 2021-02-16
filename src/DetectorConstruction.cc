@@ -67,13 +67,3 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
                         "world", 0, false, 0, checkoverlaps);
   return physiworld;
 }
-
-void DetectorConstruction::SetFilmXY(G4double val)
-{
-  fFilmXY = val;
-}
-
-void DetectorConstruction::SetFilmZ(G4double val)
-{
-  fFilmZ = val;
-}

@@ -30,37 +30,41 @@
 #include "G4UIcmdWithAString.hh"
 #include "G4UIcmdWithADoubleAndUnit.hh"
 
-PhysicsListMessenger::PhysicsListMessenger(PhysicsList* pPhys)
-:G4UImessenger(),fPhysicsList(pPhys),fPhysDir(0),fListCmd(0)
+PhysicsListMessenger::PhysicsListMessenger(PhysicsList *pl)
+    : G4UImessenger(), fPhysicsList(pl), fMaxChargedStep(DBL_MAX)
 {
-  fPhysDir = new G4UIdirectory("/FilmTrack/phys/");
+  fPhysDir = new G4UIdirectory("/IonTrack/phys/");
   fPhysDir->SetGuidance("physics list commands");
-  
-  fListCmd = new G4UIcmdWithAString("/FilmTrack/phys/addPhysics",this);  
-  fListCmd->SetGuidance("Add modula physics list");
-  fListCmd->SetParameterName("PList",false);
-  fListCmd->AvailableForStates(G4State_PreInit);
-  fListCmd->SetToBeBroadcasted(false);  
 
-  fStepMaxCmd = new G4UIcmdWithADoubleAndUnit("/FilmTrack/stepMax",this);
+  fListCmd = new G4UIcmdWithAString("/IonTrack/phys/addPhysics", this);
+  fListCmd->SetGuidance("Add modula physics list");
+  fListCmd->SetParameterName("PList", false);
+  fListCmd->AvailableForStates(G4State_PreInit);
+  fListCmd->SetToBeBroadcasted(false);
+
+  fStepMaxCmd = new G4UIcmdWithADoubleAndUnit("/IonTrack/stepMax", this);
   fStepMaxCmd->SetGuidance("Set max allowed step length");
-  fStepMaxCmd->SetParameterName("mxStep",false);
+  fStepMaxCmd->SetParameterName("mxStep", false);
   fStepMaxCmd->SetRange("mxStep>0.");
   fStepMaxCmd->SetUnitCategory("Length");
-  fStepMaxCmd->AvailableForStates(G4State_PreInit, G4State_Idle);      
+  fStepMaxCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 }
 
 PhysicsListMessenger::~PhysicsListMessenger()
 {
   delete fStepMaxCmd;
   delete fListCmd;
-  delete fPhysDir;   
+  delete fPhysDir;
 }
 
-void PhysicsListMessenger::SetNewValue(G4UIcommand* command, G4String newValue)
-{       
-  if( command == fListCmd )
-   { fPhysicsList->AddPhysicsList(newValue);}
+void PhysicsListMessenger::SetNewValue(G4UIcommand *command, G4String newValue)
+{
+  if (command == fListCmd)
+  {
+    fPhysicsList->AddPhysicsList(newValue);
+  }
   if (command == fStepMaxCmd)
-  { fMaxChargedStep = fStepMaxCmd->GetNewDoubleValue(newValue); }
+  {
+    fMaxChargedStep = fStepMaxCmd->GetNewDoubleValue(newValue);
+  }
 }
