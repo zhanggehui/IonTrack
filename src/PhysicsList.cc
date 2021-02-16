@@ -31,7 +31,7 @@
 #include "G4EmDNAPhysics_option2.hh"
 #include "G4EmDNAPhysics_option4.hh"
 
-#ifndef CLUSTER_JOB
+#ifdef CLUSTER_INCLUDE
 #include "G4EmDNAPhysics_option6.hh"
 #include "G4EmDNAPhysics_stationary.hh"
 #include "G4EmDNAPhysics_stationary_option2.hh"
@@ -153,7 +153,7 @@ void PhysicsList::AddPhysicsList(const G4String& name)
     fEmPhysicsList = new G4EmDNAPhysics_option4();
   }
   
-  #ifndef CLUSTER_JOB
+  #ifdef CLUSTER_INCLUDE
   else if (name == "dna_opt6") {
     fEmName = name;
     delete fEmPhysicsList;

@@ -23,10 +23,7 @@ endif()
 #
 include(${Geant4_USE_FILE})
 
-option(CLUSTER_JOB "Run on beijixing cluster" ON)
-
-# configure a header file to pass some of the CMake settings
-# to the source code
+option(CLUSTER_INCLUDE "Run on beijixing cluster" OFF)
 configure_file(${PROJECT_SOURCE_DIR}/RunConfig.h.in RunConfig.h)
 
 #----------------------------------------------------------------------------
