@@ -152,6 +152,7 @@ void PhysicsList::AddPhysicsList(const G4String& name)
     delete fEmPhysicsList;
     fEmPhysicsList = new G4EmDNAPhysics_option4();
   }
+  
   #ifndef CLUSTER_JOB
   else if (name == "dna_opt6") {
     fEmName = name;
@@ -179,6 +180,7 @@ void PhysicsList::AddPhysicsList(const G4String& name)
     fEmPhysicsList = new G4EmDNAPhysics_stationary_option6();
   }
   #endif
+
   else {
     G4cout << "PhysicsList::AddPhysicsList: <" << name << ">"
            << " is not defined"
