@@ -2,8 +2,7 @@
 
 macfile="./run.mac"
 mkdir ./data
-for((i=1;i<11;i++))
-do
+for((i=1;i<11;i++)); do
     length=$((i*2))
     filename=dis_${length}nm.dat
 

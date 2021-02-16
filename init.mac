@@ -7,7 +7,7 @@
 #/IonTrack/det/setFilmXY   1 um
 #/IonTrack/det/setFilmZ    20 um
 
-/IonTrack/stepMax 10 nm
+#/IonTrack/stepMax 10 nm
 
 #/IonTrack/phys/addPhysics dna
 #/IonTrack/phys/addPhysics dna_opt1
