@@ -22,10 +22,17 @@ endif()
 #
 include(${Geant4_USE_FILE})
 
+option(CLUSTER_JOB "Run on beijixing cluster" ON)
+
+# configure a header file to pass some of the CMake settings
+# to the source code
+configure_file(${PROJECT_SOURCE_DIR}/RunConfig.h.in RunConfig.h)
+
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
 #
-include_directories(${PROJECT_SOURCE_DIR}/include 
+include_directories(${PROJECT_BINARY_DIR}
+                    ${PROJECT_SOURCE_DIR}/include 
                     ${PROJECT_SOURCE_DIR}/${P_NAME}/include
                     ${Geant4_INCLUDE_DIR})
 

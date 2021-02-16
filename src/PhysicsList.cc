@@ -32,10 +32,12 @@
 #include "G4EmDNAPhysics_option4.hh"
 #include "G4EmDNAPhysics_option6.hh"
 
+#ifndef CLUSTER_JOB
 #include "G4EmDNAPhysics_stationary.hh"
 #include "G4EmDNAPhysics_stationary_option2.hh"
 #include "G4EmDNAPhysics_stationary_option4.hh"
 #include "G4EmDNAPhysics_stationary_option6.hh"
+#endif
 
 #include "StepMax.hh"
 #include "G4UnitsTable.hh"
@@ -155,6 +157,7 @@ void PhysicsList::AddPhysicsList(const G4String& name)
     delete fEmPhysicsList;
     fEmPhysicsList = new G4EmDNAPhysics_option6();
   }
+  #ifndef CLUSTER_JOB
   else if (name == "dna_stat") {
     fEmName = name;
     delete fEmPhysicsList;
@@ -175,6 +178,7 @@ void PhysicsList::AddPhysicsList(const G4String& name)
     delete fEmPhysicsList;
     fEmPhysicsList = new G4EmDNAPhysics_stationary_option6();
   }
+  #endif
   else {
     G4cout << "PhysicsList::AddPhysicsList: <" << name << ">"
            << " is not defined"

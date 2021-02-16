@@ -41,6 +41,7 @@
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
 
+#include "RunConfig.h"
 
 int main(int argc,char** argv)
 {
