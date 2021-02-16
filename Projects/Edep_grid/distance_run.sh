@@ -4,7 +4,7 @@ macfile="./run.mac"
 mkdir ./data
 for((i=1;i<11;i++))
 do
-    length=$i
+    length=$((i*2))
     filename=dis_${length}nm.dat
 
     str1=distance
