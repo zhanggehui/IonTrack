@@ -15,5 +15,5 @@ do
     str2="/score/dumpQuantityToFile boxMesh eDep $filename"
     sed -i "/$str1/c$str2" $macfile
     
-    ../main $macfile && mv $filename ./data
+    ../IonTrack $macfile && mv $filename ./data
 done
