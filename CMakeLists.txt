@@ -29,8 +29,8 @@ include_directories(${PROJECT_SOURCE_DIR}/include
                     ${PROJECT_SOURCE_DIR}/${P_NAME}/include
                     ${Geant4_INCLUDE_DIR})
 
-file(GLOB sources ${PROJECT_SOURCE_DIR}/${P_NAME}/src/*.cc
-                  ${PROJECT_SOURCE_DIR}/src/*.cc)
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc
+                  ${PROJECT_SOURCE_DIR}/${P_NAME}/src/*.cc)
 
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh
                   ${PROJECT_SOURCE_DIR}/${P_NAME}/include/*.hh)

@@ -1,0 +1,28 @@
+/run/numberOfThreads 1
+/control/verbose 2
+/run/verbose 2
+
+############################################
+
+#/IonTrack/det/setFilmXY   1 um
+#/IonTrack/det/setFilmZ    20 um
+
+/IonTrack/stepMax 10 nm
+
+#/IonTrack/phys/addPhysics dna
+#/IonTrack/phys/addPhysics dna_opt1
+#/IonTrack/phys/addPhysics dna_opt2
+#/IonTrack/phys/addPhysics dna_opt3
+#/IonTrack/phys/addPhysics dna_opt4
+#/IonTrack/phys/addPhysics dna_sta_opt2 # there is no this list on cluster
+
+#/process/em/pixe true
+#/process/em/fluo true
+#/process/em/auger true
+#/process/em/augerCascade true
+#/process/em/deexcitationIgnoreCut true
+
+############################################
+
+/run/initialize
+#/tracking/verbose 2
