@@ -45,7 +45,7 @@ DetectorConstruction::DetectorConstruction()
 
   G4NistManager* man = G4NistManager::Instance();
   fwater=man->FindOrBuildMaterial("G4_WATER");
-  G4double density = 1.01*mg/cm3; // 1.38*g/cm3;
+  G4double density = 1.1*mg/cm3; // 1.38*g/cm3;
   G4Material* new_water=man->BuildMaterialWithNewDensity("Water_new","G4_WATER",density);
   fFilmMaterial=new_water;
 }
