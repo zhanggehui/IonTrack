@@ -52,5 +52,5 @@ PrimaryGeneratorMessenger::~PrimaryGeneratorMessenger()
 void PrimaryGeneratorMessenger::SetNewValue(G4UIcommand* command, G4String newValue)
 {  
   if (command == fDistanceCmd)
-   { fAction->Setdistance(fDistanceCmd->GetNewDoubleValue(newValue));}       
+   { fAction->Setdistance(fDistanceCmd->GetNewDoubleValue(newValue)); }       
 }

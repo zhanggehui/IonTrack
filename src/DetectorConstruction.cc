@@ -38,16 +38,15 @@
 DetectorConstruction::DetectorConstruction()
 : G4VUserDetectorConstruction()
 {
-  fFilmXY  = 1*um;
-  fFilmZ   = 1*um;
+  fFilmXY = 1*um;
+  fFilmZ  = 1*um;
+  fDetectorMessenger = new DetectorMessenger(this);
 
   G4NistManager* man = G4NistManager::Instance();
   G4Material* water=man->FindOrBuildMaterial("G4_WATER");
-  // G4double density = 1.6*g/cm3; // 1.38*g/cm3; 
-  // G4Material* water=man->BuildMaterialWithNewDensity("Water_1.6","G4_WATER",density);
+  G4double density = 1.6*g/cm3; // 1.38*g/cm3; 
+  G4Material* water=man->BuildMaterialWithNewDensity("Water_1.6","G4_WATER",density);
   fFilmMaterial=water;
-  
-  fDetectorMessenger = new DetectorMessenger(this);
 }
 
 DetectorConstruction::~DetectorConstruction()

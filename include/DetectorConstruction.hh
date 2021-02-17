@@ -45,7 +45,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     void SetFilmZ (G4double val) {fFilmZ = val;};
     
     G4double GetFilmXY() const {return fFilmXY;};
-    G4double GetFilmZ() const {return fFilmZ ;};
+    G4double GetFilmZ()  const {return fFilmZ ;};
 
   private:
     DetectorMessenger* fDetectorMessenger;

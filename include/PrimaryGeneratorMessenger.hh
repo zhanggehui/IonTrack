@@ -38,7 +38,7 @@ class PrimaryGeneratorMessenger: public G4UImessenger
 {
   public:
     PrimaryGeneratorMessenger(PrimaryGeneratorAction*);
-   ~PrimaryGeneratorMessenger();
+    ~PrimaryGeneratorMessenger();
     
     virtual void SetNewValue(G4UIcommand*, G4String);
     

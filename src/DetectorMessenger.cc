@@ -43,7 +43,7 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction *Det)
   fFilmXYCmd->SetParameterName("FilmX", false);
   fFilmXYCmd->SetRange("FilmX>0.");
   fFilmXYCmd->SetUnitCategory("Length");
-  fFilmXYCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+  fFilmXYCmd->AvailableForStates(G4State_PreInit);
   fFilmXYCmd->SetToBeBroadcasted(false);
 
   fFilmZCmd = new G4UIcmdWithADoubleAndUnit("/IonTrack/det/setFilmZ", this);
@@ -51,7 +51,7 @@ DetectorMessenger::DetectorMessenger(DetectorConstruction *Det)
   fFilmZCmd->SetParameterName("FilmZ", false);
   fFilmZCmd->SetRange("FilmZ>0.");
   fFilmZCmd->SetUnitCategory("Length");
-  fFilmZCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
+  fFilmZCmd->AvailableForStates(G4State_PreInit);
   fFilmZCmd->SetToBeBroadcasted(false);
 }
 
@@ -66,11 +66,7 @@ DetectorMessenger::~DetectorMessenger()
 void DetectorMessenger::SetNewValue(G4UIcommand *command, G4String newValue)
 {
   if (command == fFilmXYCmd)
-  {
-    fDetector->SetFilmXY(fFilmXYCmd->GetNewDoubleValue(newValue));
-  }
+  { fDetector->SetFilmXY(fFilmXYCmd->GetNewDoubleValue(newValue)); }
   if (command == fFilmZCmd)
-  {
-    fDetector->SetFilmZ(fFilmZCmd->GetNewDoubleValue(newValue));
-  }
+  { fDetector->SetFilmZ(fFilmZCmd->GetNewDoubleValue(newValue)); }
 }
