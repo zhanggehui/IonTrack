@@ -10,7 +10,7 @@ for((i=0;i<11;i++)); do
     #str2="/IonTrack/gun/distance $length nm"
     #sed -i "/$str1/c$str2" $macfile
     str1='/gun/position'
-    str2="/gun/position $length nm"
+    str2="/gun/position $length 0 0 nm"
     sed -i "/$str1/c$str2" $macfile
     
     str1=dumpQuantityToFile
