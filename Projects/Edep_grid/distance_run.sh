@@ -2,7 +2,7 @@
 
 macfile="./run.mac"
 mkdir ./data
-for((i=1;i<15;i++)); do
+for((i=0;i<15;i++)); do
     echo "------------------------  ${i}_th run ------------------------"
     length=`echo "2*$i" | bc`
     filename=dis_${length}nm.dat
