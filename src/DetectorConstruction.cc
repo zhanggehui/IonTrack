@@ -42,12 +42,10 @@ DetectorConstruction::DetectorConstruction()
   fFilmZ   = 1*um;
 
   G4NistManager* man = G4NistManager::Instance();
-  // G4Material* water=man->FindOrBuildMaterial("G4_WATER");
-  // G4double density = 1.38*g/cm3; 
-  // G4Material* water138=man->BuildMaterialWithNewDensity("Water_1.38","G4_WATER",density);
-  G4double density = 1.6*g/cm3; 
-  G4Material* water16=man->BuildMaterialWithNewDensity("Water_1.6","G4_WATER",density);
-  fFilmMaterial=water16;
+  G4Material* water=man->FindOrBuildMaterial("G4_WATER");
+  // G4double density = 1.6*g/cm3; // 1.38*g/cm3; 
+  // G4Material* water=man->BuildMaterialWithNewDensity("Water_1.6","G4_WATER",density);
+  fFilmMaterial=water;
   
   fDetectorMessenger = new DetectorMessenger(this);
 }
