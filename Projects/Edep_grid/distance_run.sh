@@ -2,8 +2,8 @@
 
 macfile="./run.mac"
 mkdir ./data
-for((i=0;i<11;i++)); do
-    length=$i
+for((i=1;i<11;i++)); do
+    length=`echo "2*$i-1" | bc`
     filename=dis_${length}nm.dat
 
     #str1=distance
