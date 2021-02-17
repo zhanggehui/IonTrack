@@ -50,6 +50,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
   private:
     DetectorMessenger* fDetectorMessenger;
     G4Material*        fFilmMaterial;
+    G4Material*        fwater;
     G4double           fFilmXY, fFilmZ;
 };
 
