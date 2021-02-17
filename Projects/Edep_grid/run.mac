@@ -2,7 +2,7 @@
 
 # define scoring mesh
 /score/create/boxMesh boxMesh
-/score/mesh/boxSize 50.5 50.5 50.5 nm
+/score/mesh/boxSize 50.5 50.5 50.5 um
 /score/mesh/nBin 101 101 1
 /score/quantity/energyDeposit eDep eV
 /score/close
