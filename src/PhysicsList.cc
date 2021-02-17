@@ -59,11 +59,10 @@ PhysicsList::PhysicsList() : G4VModularPhysicsList()
 {
   fMessenger = new PhysicsListMessenger(this);
   
-  // EM physics
   fEmName="dna_opt2";
   fEmPhysicsList = new G4EmDNAPhysics_option2();
 
-  //SetDefaultCutValue(1*nm);  
+  SetDefaultCutValue(1*nm);  
   SetVerboseLevel(1);
 }
 
