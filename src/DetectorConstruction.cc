@@ -31,6 +31,7 @@
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 #include "G4NistManager.hh"
+
 #include "G4UnitsTable.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
@@ -44,9 +45,9 @@ DetectorConstruction::DetectorConstruction()
 
   G4NistManager* man = G4NistManager::Instance();
   fwater=man->FindOrBuildMaterial("G4_WATER");
-  G4double density = 1.05*g/cm3; // 1.38*g/cm3;
-  fwater=man->BuildMaterialWithNewDensity("Water_new","G4_WATER",density);
-  fFilmMaterial=fwater;
+  G4double density = 1.01*g/cm3; // 1.38*g/cm3;
+  G4Material* new_water=man->BuildMaterialWithNewDensity("Water_new","G4_WATER",density);
+  fFilmMaterial=new_water;
 }
 
 DetectorConstruction::~DetectorConstruction()
