@@ -30,7 +30,7 @@
 #include "G4UIcmdWithADoubleAndUnit.hh"
 
 PrimaryGeneratorMessenger::PrimaryGeneratorMessenger(PrimaryGeneratorAction* Gun)
-:G4UImessenger(), fAction(Gun)
+: G4UImessenger(), fAction(Gun)
 {
   fGunDir = new G4UIdirectory("/IonTrack/gun/");
   fGunDir->SetGuidance("gun position control");
