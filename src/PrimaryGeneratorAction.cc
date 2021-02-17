@@ -61,10 +61,14 @@ void PrimaryGeneratorAction::SetDefaultKinematic()
 
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
+  G4double x0=0;
+  if (G4UniformRand()<0.5) { x0=fvertex_x; }
+  else { x0=-fvertex_x; }
+  fParticleGun->GeneratePrimaryVertex(anEvent); 
   const DetectorConstruction* Detector
       = static_cast<const DetectorConstruction*>
         (G4RunManager::GetRunManager()->GetUserDetectorConstruction());
   G4double z0 = (Detector->GetFilmZ())/2;
-  fParticleGun->SetParticlePosition(G4ThreeVector(0, 0., z0));
+  fParticleGun->SetParticlePosition(G4ThreeVector(x0, 0., z0));
   fParticleGun->GeneratePrimaryVertex(anEvent); 
 }
