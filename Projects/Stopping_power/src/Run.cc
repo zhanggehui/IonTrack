@@ -25,6 +25,7 @@
 //
 
 #include "Run.hh"
+#include "G4ParticleDefinition.hh"
 #include "DetectorConstruction.hh"
 #include "PrimaryGeneratorAction.hh"
 #include "G4Material.hh"

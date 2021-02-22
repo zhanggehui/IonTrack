@@ -32,28 +32,19 @@
 #include "G4RunManager.hh"
 #endif
 #include "G4UImanager.hh"
-#include "G4ScoringManager.hh"
-
-#include "DetectorConstruction.hh"
-#include "PhysicsList.hh" 
-#include "ActionInitialization.hh"
-
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
 
 #include "RunConfig.h"
 
+#include "G4ScoringManager.hh"
+#include "DetectorConstruction.hh"
+#include "PhysicsList.hh" 
+#include "ActionInitialization.hh"
+
 int main(int argc,char** argv)
 {
-  G4UIExecutive* ui = nullptr;
-  if (argc == 1) ui = new G4UIExecutive(argc,argv);
-
-  #ifdef G4MULTITHREADED
-  G4MTRunManager * runManager = new G4MTRunManager;
-  runManager->SetNumberOfThreads(4);
-  #else
-  G4RunManager * runManager = new G4RunManager;
-  #endif
+  #include "main_p1.hh"
 
   // Activate UI-command base scorer
   G4ScoringManager * scManager = G4ScoringManager::GetScoringManager();
@@ -63,21 +54,5 @@ int main(int argc,char** argv)
   runManager->SetUserInitialization(new PhysicsList());
   runManager->SetUserInitialization(new ActionInitialization());
 
-  G4VisManager* visManager = nullptr; 
-  G4UImanager* UImanager = G4UImanager::GetUIpointer();
-  if (ui) {
-    visManager = new G4VisExecutive;
-    visManager->Initialize();
-    UImanager->ApplyCommand("/control/execute ../vis.mac");
-    ui->SessionStart();
-    delete ui;
-  } 
-  else {
-    G4String command = "/control/execute ";
-    G4String fileName = argv[1];
-    UImanager->ApplyCommand(command+fileName);
-  }
-
-  delete visManager;
-  delete runManager;
+  #include "main_p2.hh"
 }

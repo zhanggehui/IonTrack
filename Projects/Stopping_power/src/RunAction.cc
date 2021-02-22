@@ -29,6 +29,8 @@
 #include "PrimaryGeneratorAction.hh"
 #include "Run.hh"
 #include "G4RunManager.hh"
+#include "G4ParticleDefinition.hh"
+#include "G4ParticleGun.hh"
 
 RunAction::RunAction()
 : G4UserRunAction(), fpRun(0)
