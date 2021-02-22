@@ -7,18 +7,17 @@
 /vis/drawVolume
 ##########################################################
 
-# To get nice view
-# Make the Logic "world" box visible and transparent blue to represent water
-
-/vis/geometry/set/visibility world 0 true
-/vis/geometry/set/colour world 0 0 0 1 0.2     #last one 0 means transparent
-/vis/viewer/set/style surface                  #surface or wireframe
+# view setting
 /vis/viewer/set/viewpointThetaPhi 105 165 deg
-/vis/viewer/set/edge true                      #show edge
 /vis/viewer/set/background white               #white background
+/vis/geometry/set/visibility world 0 true
 
-# Specify style (surface, wireframe, auxiliary edges,...)
-#/vis/viewer/set/auxiliaryEdge true
+# Make the Logic "world" box visible and transparent blue to represent water
+/vis/geometry/set/colour world 0 0 0 1 0.2     #colour [logical-volume-name] [depth] [red] [green] [blue] [opacity]
+
+/vis/viewer/set/style surface                  #surface or wireframe
+/vis/viewer/set/edge true                      #在surface模式下需要show edge
+#/vis/viewer/set/auxiliaryEdge true            #圆柱时可以显示侧面的辅助线
 #/vis/viewer/set/lineSegmentsPerCircle 100
 
 /vis/scene/add/trajectories smooth
