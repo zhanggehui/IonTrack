@@ -23,8 +23,6 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file SteppingAction.hh
-/// \brief Definition of the SteppingAction class
 
 #ifndef SteppingAction_h
 #define SteppingAction_h 1
@@ -32,26 +30,21 @@
 #include "G4UserSteppingAction.hh"
 #include "globals.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-class SteppingAction : public G4UserSteppingAction
+class SteppingAction: public G4UserSteppingAction
 {
-public:
+  public:
+    SteppingAction();
+    ~SteppingAction();
 
-  SteppingAction();
-  ~SteppingAction();
+    virtual void UserSteppingAction(const G4Step*);
 
-  virtual void UserSteppingAction(const G4Step*);
+    G4double GetStoppingPower(){return fTotalStoppingPower;};
 
-  G4double GetStoppingPower(){return fTotalStoppingPower;};
-
-private:
-  
-  G4double fSumOfStepLength,fLength,fDeltaE,fTotalStoppingPower,
-           fTotalNumberOfSteps,fDepositedEnergy;
-
-  G4int    fNumberOfSteps;    
-
+  private:
+    G4double  fTotalStoppingPower,
+              fSumOfStepLength,
+              fDepositedEnergy;
+    G4int     fNumberOfSteps;    
 };
 
 #endif

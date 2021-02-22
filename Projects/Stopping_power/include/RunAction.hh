@@ -23,8 +23,6 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file RunAction.hh
-/// \brief Definition of the RunAction class
 
 #ifndef RunAction_h
 #define RunAction_h 1
@@ -34,30 +32,22 @@
 
 class Run;
 class DetectorConstruction;
-class PrimaryGeneratorAction;
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class RunAction: public G4UserRunAction
 {
+  public:
+    RunAction();
+    ~RunAction();
 
-public:
+    virtual void BeginOfRunAction(const G4Run*);
 
-  RunAction();
-  ~RunAction();
+    virtual void EndOfRunAction(const G4Run*);
+    
+    virtual G4Run* GenerateRun();
 
-  virtual void BeginOfRunAction(const G4Run*);
-
-  virtual void EndOfRunAction(const G4Run*);
-  
-  virtual G4Run* GenerateRun();
-
-private:
-
-  const DetectorConstruction* fpDetector;
-
-  Run* fpRun;
+  private:
+    const DetectorConstruction* fpDetector;
+    Run* fpRun;
 };
 
 #endif
-

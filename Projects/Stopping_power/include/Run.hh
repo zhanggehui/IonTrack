@@ -23,43 +23,32 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file Run.hh
-/// \brief Definition of the Run class
 
 #ifndef Run_h
 #define Run_h 1
 
 #include "DetectorConstruction.hh"
-
 #include "G4Run.hh"
 
 class DetectorConstruction;
 class G4ParticleDefinition;
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 class Run : public G4Run
 {
-public:
+    public:
+        Run(const DetectorConstruction* detector);
+        ~Run();
 
-    Run(const DetectorConstruction* detector);
-   ~Run();
-
-    void SetPrimary(G4ParticleDefinition* particle, G4double energy);  
-
-    void AddSP (G4double x);
-
-    virtual void Merge(const G4Run*);
-
-    void EndOfRun();
-    
-private:
-
-    const DetectorConstruction* fDetector;
-    G4ParticleDefinition* fParticle;
-    G4double fEkin;    
-    G4double fSP, fSP2;
+        void SetPrimary(G4ParticleDefinition* particle, G4double energy);  
+        void AddSP (G4double x);
+        virtual void Merge(const G4Run*);
+        void EndOfRun();
+        
+    private:
+        const DetectorConstruction* fDetector;
+        G4ParticleDefinition* fParticle;
+        G4double fEkin;    
+        G4double fSP, fSP2;
 };
 
 #endif
-

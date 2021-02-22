@@ -23,41 +23,26 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file EventAction.cc
-/// \brief Implementation of the EventAction class
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 #include "EventAction.hh"
-#include "RunAction.hh"
 #include "SteppingAction.hh"
 #include "Run.hh"
-
 #include "G4Event.hh"
 #include "G4RunManager.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-
-EventAction::EventAction(SteppingAction* st):G4UserEventAction(),
-fStep(st)
+EventAction::EventAction(SteppingAction* st)
+: G4UserEventAction(), fSteppingAction(st)
 {}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 EventAction::~EventAction()
 {}
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-
 void EventAction::BeginOfEventAction(const G4Event*)
 {}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 void EventAction::EndOfEventAction(const G4Event*)
 {  
   Run* run
-   = static_cast<Run*>(G4RunManager::GetRunManager()->GetNonConstCurrentRun());
-
-  run->AddSP(fStep->GetStoppingPower());
+    = static_cast<Run*>(G4RunManager::GetRunManager()->GetNonConstCurrentRun());
+  run->AddSP(fSteppingAction->GetStoppingPower());
 }

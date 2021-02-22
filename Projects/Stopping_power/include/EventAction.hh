@@ -23,37 +23,26 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file EventAction.hh
-/// \brief Definition of the EventAction class
 
 #ifndef EventAction_h
 #define EventAction_h 1
 
 #include "G4UserEventAction.hh"
-
 #include "globals.hh"
-#include <iostream>
 
-class RunAction;
-class EventAction;
+class G4Event;
 class SteppingAction;
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 class EventAction : public G4UserEventAction
 {
+    public:   
+        EventAction(SteppingAction*);
+        ~EventAction();
 
-public:
-  
-    EventAction(SteppingAction *);
-   ~EventAction();
-
-    virtual void BeginOfEventAction(const G4Event*);
-    virtual void EndOfEventAction(const G4Event*);
-        
-private:
-  
-    SteppingAction*         fStep;
-
+        virtual void BeginOfEventAction(const G4Event*);
+        virtual void EndOfEventAction(const G4Event*);
+            
+    private:
+        SteppingAction* fSteppingAction;
 };
 #endif

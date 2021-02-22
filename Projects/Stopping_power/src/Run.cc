@@ -23,48 +23,35 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file Run.cc
-/// \brief Implementation of the Run class
 
 #include "Run.hh"
 #include "DetectorConstruction.hh"
 #include "PrimaryGeneratorAction.hh"
-
 #include "G4Material.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4UnitsTable.hh"
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+#include <iostream>
 
 Run::Run(const DetectorConstruction* detector)
-: G4Run(),
-  fDetector(detector),
+: G4Run(), fDetector(detector),
   fParticle(0), fEkin(0.),  
-  fSP(0.),  fSP2(0.)
+  fSP(0.), fSP2(0.)
 {}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 Run::~Run()
 {}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void Run::SetPrimary (G4ParticleDefinition* particle, G4double energy)
 { 
   fParticle = particle;
   fEkin     = energy;
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
     
 void Run::AddSP (G4double t) 
 {
   fSP  += t;
   fSP2 += t*t;
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void Run::Merge(const G4Run* run)
 {
@@ -81,8 +68,6 @@ void Run::Merge(const G4Run* run)
   G4Run::Merge(run); 
 } 
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 void Run::EndOfRun() 
 {
   std::ios::fmtflags mode = G4cout.flags();
@@ -90,16 +75,15 @@ void Run::EndOfRun()
   G4int prec = G4cout.precision(2);
   
   //run conditions  
-  //
-  G4Material* material = fDetector->GetAbsorMaterial();
+  G4Material* material = fDetector->GetFilmMaterial();
   G4double density  = material->GetDensity();       
   G4String partName = fParticle->GetParticleName();
   
-  G4cout << "\n ======================== run summary =====================\n";  
+  G4cout << "\n======================== run summary ========================\n";  
   G4cout 
     << "\n The run is " << numberOfEvent << " "<< partName << " of "
-    << G4BestUnit(fEkin,"Energy") << " through a sphere of radius "
-    << G4BestUnit(fDetector->GetAbsorRadius(),"Length") << "of "
+    << G4BestUnit(fEkin,"Energy") << " through a Film "
+    << G4BestUnit(fDetector->GetFilmZ(),"Length") << "of "
     << material->GetName() << " (density: " 
     << G4BestUnit(density,"Volumic Mass") << ")" << G4endl;    
 
@@ -110,30 +94,25 @@ void Run::EndOfRun()
   }
                     
   //compute stopping power
-  //
   fSP /= numberOfEvent; fSP2 /= numberOfEvent;
   G4double rms = fSP2 - fSP*fSP;      
         
   if (rms>0.) rms = std::sqrt(rms); else rms = 0.;
 
   G4cout 
-  << "\n total Stopping Power (keV/um)   = "<< fSP/(keV/um)
-  << " +- "                                << rms/(keV/um)    
+  << "\n total Stopping Power (keV/nm)   = "<< fSP/(keV/nm)
+  << " +- "                                << rms/(keV/nm)    
   << G4endl;
     
   //output file
-  //
   FILE* myFile;
   myFile=fopen("spower.txt","a");
-  fprintf(myFile,"%e %e %e \n",
-     fEkin/eV,
-     fSP/(keV/um),
-     rms/(keV/um));
+  fprintf(
+     myFile,"%e %e %e \n",
+     fEkin/eV, fSP/(keV/nm), rms/(keV/nm) );
   fclose(myFile);
 
   //reset default formats
-  //
   G4cout.setf(mode,std::ios::floatfield);
   G4cout.precision(prec);
-
 }

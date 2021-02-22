@@ -39,29 +39,29 @@
 DetectorConstruction::DetectorConstruction()
 : G4VUserDetectorConstruction()
 {
-  fFilmXY = 1*um;
-  fFilmZ  = 1*um;
+  fFilmXY = 1 * um;
+  fFilmZ = 1 * um;
   fDetectorMessenger = new DetectorMessenger(this);
 
-  G4NistManager* man = G4NistManager::Instance();
-  fwater=man->FindOrBuildMaterial("G4_WATER");
+  G4NistManager *man = G4NistManager::Instance();
+  fwater = man->FindOrBuildMaterial("G4_WATER");
   //G4double density = 1.38*mg/cm3; // 1.38*g/cm3;
   //fwater=man->BuildMaterialWithNewDensity("Water_new","G4_WATER",density);
-  fFilmMaterial=fwater;
+  fFilmMaterial = fwater;
 }
 
 DetectorConstruction::~DetectorConstruction()
-{ 
+{
   delete fDetectorMessenger;
 }
-  
-G4VPhysicalVolume* DetectorConstruction::Construct()
-{ 
+
+G4VPhysicalVolume *DetectorConstruction::Construct()
+{
   G4bool checkoverlaps = false;
-  G4Box* solidworld = new G4Box("world", fFilmXY/2, fFilmXY/2, fFilmZ/2);
-  G4LogicalVolume* logicworld = new G4LogicalVolume(solidworld, fFilmMaterial, "world");            
-  G4VPhysicalVolume* physiworld =
-      new G4PVPlacement(0, G4ThreeVector(), logicworld,        
+  G4Box *solidworld = new G4Box("world", fFilmXY / 2, fFilmXY / 2, fFilmZ / 2);
+  G4LogicalVolume *logicworld = new G4LogicalVolume(solidworld, fFilmMaterial, "world");
+  G4VPhysicalVolume *physiworld =
+      new G4PVPlacement(0, G4ThreeVector(), logicworld,
                         "world", 0, false, 0, checkoverlaps);
   return physiworld;
 }

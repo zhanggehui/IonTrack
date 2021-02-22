@@ -23,128 +23,75 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file SteppingAction.cc
-/// \brief Implementation of the SteppingAction class
 
 #include "SteppingAction.hh"
-#include "Run.hh"
-
 #include "G4RunManager.hh"
 #include "G4Electron.hh"
 #include "G4Gamma.hh"
 #include "G4Proton.hh"
 #include "G4DNAGenericIonsManager.hh"
-#include "G4SystemOfUnits.hh"
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 SteppingAction::SteppingAction()
-:G4UserSteppingAction()
-{
-  fSumOfStepLength    =  0;
-  fLength             =  0;
-  fDeltaE             = -7;
-  fTotalStoppingPower = -8;
-  fTotalNumberOfSteps = 0;
-  fNumberOfSteps      = 0;
-  fDepositedEnergy    = 0;
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+: G4UserSteppingAction(), fTotalStoppingPower(0.),
+fSumOfStepLength(0.), fDepositedEnergy(0.), fNumberOfSteps(0)
+{}
 
 SteppingAction::~SteppingAction()
 {}
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 void SteppingAction::UserSteppingAction(const G4Step* step)
 {
-
- //*** WARNING: this line will kill all secondary e- and gammas ***
-
- if (    step->GetTrack()->GetDefinition()==G4Electron::ElectronDefinition()
-      && step->GetTrack()->GetTrackID() != 1 ) 
+  //由于电荷态会发生变化(以二次电子的形式), 所以要考虑二次粒子, 但是在变换电荷态时可能
+  //产生的二次电子先被追踪, 导致时间浪费,故直接kill掉
+  //*** WARNING: this line will kill all secondary e- and gammas ***
+  if ( (step->GetTrack()->GetDefinition()==G4Electron::ElectronDefinition()
+        && step->GetTrack()->GetTrackID() != 1) 
+        ||
+        step->GetTrack()->GetDefinition()==G4Gamma::GammaDefinition() ) 
     step->GetTrack()->SetTrackStatus(fStopAndKill);
 
- if (    step->GetTrack()->GetDefinition()==G4Gamma::GammaDefinition() ) 
-    step->GetTrack()->SetTrackStatus(fStopAndKill);
-
- //
- 
- G4double charge   = step->GetTrack()->GetDefinition()->GetPDGCharge();
- G4double steplen  = step->GetStepLength();
- G4double edep     =  step->GetTotalEnergyDeposit();
- G4int maxNumberOfSteps = 0;
-
- G4DNAGenericIonsManager *instance;
- instance = G4DNAGenericIonsManager::Instance();
-
- if ( 
- 
+  G4double charge = step->GetTrack()->GetDefinition()->GetPDGCharge();
+  if ( 
       // ELECTRONS 
-      (
-        step->GetTrack()->GetTrackID() == 1 &&
-        step->GetTrack()->GetParticleDefinition()==G4Electron::ElectronDefinition()
-      )
-     
+      ( step->GetTrack()->GetTrackID() == 1 &&
+        step->GetTrack()->GetParticleDefinition()==G4Electron::ElectronDefinition() )
       ||
-     
-      // PROTONS, HYDROGEN, ALPHA PARTICLES AND CHARGED STATES
-      (
-        charge != -1. &&
-        step->GetTrack()->GetParticleDefinition()!=G4Gamma::GammaDefinition()       
-      )
-     
-    )
- { 
-     fSumOfStepLength = fSumOfStepLength + steplen;
-     fDepositedEnergy = fDepositedEnergy + edep;
-     fNumberOfSteps = fNumberOfSteps + 1;
-     maxNumberOfSteps = 10000;
-     //G4cout << fSumOfStepLength << " " << fDepositedEnergy << " " << fNumberOfSteps << G4endl;
-          
-     // ELECTRONS
-     
-     if (step->GetTrack()->GetParticleDefinition()==G4Electron::ElectronDefinition())
-      maxNumberOfSteps = 1000;
-
-     // PROTONS, HYDROGEN
-     
-     if 
-     (
-       step->GetTrack()->GetParticleDefinition()==G4Proton::ProtonDefinition()
-       ||
-       step->GetTrack()->GetParticleDefinition()==instance->GetIon("hydrogen")
+      // PROTONS, HYDROGEN, ALPHA PARTICLES AND CHARGED STATES, GenericIons
+      ( charge != -1. &&
+        step->GetTrack()->GetParticleDefinition()!=G4Gamma::GammaDefinition() )
      )
-       maxNumberOfSteps = 1000;
-     
-     // He0, He+, He2+
-     
-     if 
-     (
-       step->GetTrack()->GetParticleDefinition()==instance->GetIon("alpha++")
-       ||
-       step->GetTrack()->GetParticleDefinition()==instance->GetIon("alpha+")
-       ||
-       step->GetTrack()->GetParticleDefinition()==instance->GetIon("helium")
-     )
-       maxNumberOfSteps = 10000;
-      
+  {   
+    G4DNAGenericIonsManager *instance = G4DNAGenericIonsManager::Instance();
+    
+    fDepositedEnergy = fDepositedEnergy + step->GetTotalEnergyDeposit();
+    fSumOfStepLength = fSumOfStepLength + step->GetStepLength();
+    fNumberOfSteps = fNumberOfSteps + 1;
+    G4int maxNumberOfSteps = 10000;
 
-     // All
-     
-     if (fNumberOfSteps > maxNumberOfSteps)
-     { 
-        fLength = fSumOfStepLength;
-        fTotalStoppingPower = fDepositedEnergy/fLength;
-        //G4cout << fTotalStoppingPower/(MeV/cm) << G4endl;
- 
-        G4RunManager::GetRunManager()->AbortEvent();
-        fSumOfStepLength=0.;
-        fDepositedEnergy=0;
-        fNumberOfSteps = 0;
- 
-     };
- };
+    // ELECTRONS
+    if ( step->GetTrack()->GetParticleDefinition()==G4Electron::ElectronDefinition() )
+      maxNumberOfSteps = 2000;
+    // PROTONS, HYDROGEN
+    if ( step->GetTrack()->GetParticleDefinition()==G4Proton::ProtonDefinition()
+         ||
+         step->GetTrack()->GetParticleDefinition()==instance->GetIon("hydrogen") )
+      maxNumberOfSteps = 2000;
+    // He0, He+, He2+
+    if ( step->GetTrack()->GetParticleDefinition()==instance->GetIon("alpha+")
+         ||
+         step->GetTrack()->GetParticleDefinition()==instance->GetIon("alpha++")
+         ||
+         step->GetTrack()->GetParticleDefinition()==instance->GetIon("helium") )
+      maxNumberOfSteps = 10000;
 
+    // All
+    if (fNumberOfSteps > maxNumberOfSteps)
+    { 
+      fTotalStoppingPower = fDepositedEnergy/fSumOfStepLength;
+      G4RunManager::GetRunManager()->AbortEvent();
+      fSumOfStepLength = 0.;
+      fDepositedEnergy = 0.;
+      fNumberOfSteps = 0;
+    };
+  };
 }

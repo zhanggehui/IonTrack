@@ -36,30 +36,29 @@ class PhysicsListMessenger;
 
 class StepMax : public G4VEmProcess
 {
-public:
+  public:
+    StepMax(PhysicsListMessenger*);
+    virtual ~StepMax();
 
-  StepMax(PhysicsListMessenger*);
-  virtual ~StepMax();
+    virtual G4bool IsApplicable(const G4ParticleDefinition&);
 
-  virtual G4bool IsApplicable(const G4ParticleDefinition&);
+    virtual void PreparePhysicsTable(const G4ParticleDefinition&);
 
-  virtual void PreparePhysicsTable(const G4ParticleDefinition&);
+    virtual void BuildPhysicsTable(const G4ParticleDefinition&);
 
-  virtual void BuildPhysicsTable(const G4ParticleDefinition&);
+    virtual void InitialiseProcess(const G4ParticleDefinition*);
 
-  virtual void InitialiseProcess(const G4ParticleDefinition*);
+    virtual G4double PostStepGetPhysicalInteractionLength(const G4Track& track,
+                                                          G4double previousStep,
+                                                          G4ForceCondition* cond);
 
-  virtual G4double PostStepGetPhysicalInteractionLength(const G4Track& track,
-                                                        G4double previousStep,
-                                                        G4ForceCondition* cond);
+    virtual G4VParticleChange* PostStepDoIt(const G4Track&, const G4Step&);
+    virtual void PrintInfo(){};
 
-  virtual G4VParticleChange* PostStepDoIt(const G4Track&, const G4Step&);
-  virtual void PrintInfo(){};
-
-private:
-  PhysicsListMessenger* fMessenger;
-  G4double fMaxChargedStep;
-  G4bool fInitialised;
+  private:
+    PhysicsListMessenger* fMessenger;
+    G4double fMaxChargedStep;
+    G4bool fInitialised;
 };
 
 #endif
