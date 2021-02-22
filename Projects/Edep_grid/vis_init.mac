@@ -1,4 +1,5 @@
 /control/execute ../init.mac
+/run/initialize
 
 # (Edit the next line to choose another graphic system)
 /vis/open OGL
