@@ -1,0 +1,28 @@
+/control/execute ../run_init.mac
+
+########################################
+# define scoring mesh
+/score/create/boxMesh boxMesh
+/score/mesh/boxSize 50.5 50.5 50.5 nm
+/score/mesh/nBin 101 101 1
+/score/quantity/energyDeposit eDep eV
+/score/close
+/score/list
+#
+########################################
+#
+
+/IonTrack/gun/distance 30 nm
+/gun/particle ion
+/gun/ion 14 28 
+/gun/energy 25 MeV
+
+/run/printProgress 10
+/run/beamOn 1000
+
+#
+########################################
+#
+# Dump scorers to a file
+/score/dumpQuantityToFile boxMesh eDep dis_30nm.dat
+#

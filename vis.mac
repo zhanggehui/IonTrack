@@ -7,7 +7,7 @@
 ##########################################################
 
 # To get nice view
-# Make the Logic "Film" box visible and set color, transparent blue to represent water
+# Make the Logic "world" box visible and transparent blue to represent water
 
 /vis/geometry/set/visibility world 0 true
 /vis/geometry/set/colour world 0 0 0 1 0.2     #last one 0 means transparent
