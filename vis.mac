@@ -13,7 +13,7 @@
 /vis/geometry/set/visibility world 0 true
 /vis/geometry/set/colour world 0 0 0 1 0.2     #last one 0 means transparent
 /vis/viewer/set/style surface                  #surface or wireframe
-/vis/viewer/set/viewpointThetaPhi 70. 20.
+/vis/viewer/set/viewpointThetaPhi 105 165 deg
 /vis/viewer/set/edge true                      #show edge
 /vis/viewer/set/background white               #white background
 

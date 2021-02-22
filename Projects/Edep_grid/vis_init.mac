@@ -1,4 +1,8 @@
 /control/execute ../init.mac
+
+/IonTrack/det/setFilmXY 120 nm
+/IonTrack/det/setFilmZ  120 nm
+
 /run/initialize
 
 # (Edit the next line to choose another graphic system)
@@ -12,7 +16,7 @@
 ######################################################################
 
 /vis/drawVolume
-/vis/viewer/set/viewpointThetaPhi 0 45 deg
+/vis/viewer/set/viewpointThetaPhi 105 165 deg
 /vis/scene/add/trajectories smooth
 /vis/modeling/trajectories/create/drawByCharge
 /vis/scene/endOfEventAction accumulate

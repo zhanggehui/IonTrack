@@ -1,25 +1,26 @@
 # define scoring mesh
 /score/create/boxMesh boxMesh
-/score/mesh/boxSize 200.5 200.5 200 nm
-/score/mesh/nBin 20 20 1
+/score/mesh/boxSize 50.5 50.5 50 nm
+/score/mesh/nBin 20 20 20
 /score/quantity/energyDeposit eDep eV
 /score/close
 /score/list
 
 /IonTrack/gun/distance 0 nm
-#/gun/particle ion
-#/gun/ion 14 28 
-#/gun/energy 25 MeV
+/gun/particle ion
+/gun/ion 14 28 
+/gun/energy 25 MeV
 
 /run/printProgress 10
 
 # If too many tracks, /vis/disable before running many events
-#/vis/disable
-/run/beamOn 1000
-#/vis/enable
+/vis/disable
+/run/beamOn 1
+/vis/enable
+
+# drawing projections
+/score/drawProjection boxMesh eDep
 
 # Dump scorers to a file
 /score/dumpQuantityToFile boxMesh eDep edep.dat
 
-# drawing projections
-/score/drawProjection boxMesh eDep
