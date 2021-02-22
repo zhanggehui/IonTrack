@@ -1,0 +1,25 @@
+/control/execute ../init.mac
+
+# (Edit the next line to choose another graphic system)
+/vis/open OGL
+
+# Disable auto refresh and quieten vis messages whilst scene and
+# trajectories are established:
+/vis/viewer/set/autoRefresh false
+/vis/verbose errors
+
+######################################################################
+
+/vis/drawVolume
+/vis/viewer/set/viewpointThetaPhi 0 45 deg
+/vis/scene/add/trajectories smooth
+/vis/modeling/trajectories/create/drawByCharge
+/vis/scene/endOfEventAction accumulate
+
+##############################################################
+
+# Re-establish auto refreshing and verbosity:
+/vis/viewer/set/autoRefresh true
+/vis/verbose warnings
+
+#/control/execute ../Projects/Edep_grid/vis_run.mac

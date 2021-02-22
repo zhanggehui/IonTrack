@@ -1,5 +1,7 @@
 /control/execute ./init.mac
 
+/run/initialize
+
 # define scoring mesh
 /score/create/boxMesh boxMesh
 /score/mesh/boxSize 50.5 50.5 50 nm

@@ -44,7 +44,14 @@
 
 int main(int argc,char** argv)
 {
-  #include "main_p1.hh"
+  G4UIExecutive* ui = nullptr;
+  if (argc == 1) ui = new G4UIExecutive(argc,argv);
+
+  #ifdef G4MULTITHREADED
+    G4MTRunManager* runManager = new G4MTRunManager;
+  #else
+    G4RunManager* runManager = new G4RunManager;
+  #endif
 
   // Activate UI-command base scorer
   G4ScoringManager * scManager = G4ScoringManager::GetScoringManager();
@@ -54,5 +61,21 @@ int main(int argc,char** argv)
   runManager->SetUserInitialization(new PhysicsList());
   runManager->SetUserInitialization(new ActionInitialization());
 
-  #include "main_p2.hh"
+  G4VisManager* visManager = nullptr; 
+  G4UImanager* UImanager = G4UImanager::GetUIpointer();
+  if (ui) {
+    visManager = new G4VisExecutive;
+    visManager->Initialize();
+    UImanager->ApplyCommand("/control/execute ../Projects/Edep_grid/vis_init.mac");
+    ui->SessionStart();
+    delete ui;
+  } 
+  else {
+    G4String command = "/control/execute ";
+    G4String fileName = argv[1];
+    UImanager->ApplyCommand(command+fileName);
+  }
+
+  delete visManager;
+  delete runManager;
 }
