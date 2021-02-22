@@ -1,7 +1,7 @@
 # define scoring mesh
 /score/create/boxMesh boxMesh
-/score/mesh/boxSize 50.5 50.5 50 nm
-/score/mesh/nBin 20 20 20
+/score/mesh/boxSize 50.5 50.5 50.5 nm
+/score/mesh/nBin 101 101 20
 /score/quantity/energyDeposit eDep eV
 /score/close
 /score/list
@@ -19,8 +19,8 @@
 /vis/enable
 
 # drawing projections
-/score/drawProjection boxMesh eDep
+#/score/drawProjection boxMesh eDep
 
-# Dump scorers to a file
-/score/dumpQuantityToFile boxMesh eDep edep.dat
-
+# drawing slices
+/score/colorMap/setMinMax ! 0. 800.
+/score/drawColumn boxMesh eDep 0 19

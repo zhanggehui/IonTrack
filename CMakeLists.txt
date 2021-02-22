@@ -1,5 +1,5 @@
 # Edep_grid TR_Track Stopping_power
-set(P_NAME Projects/Stopping_power)
+set(P_NAME Projects/Edep_grid)
 
 #----------------------------------------------------------------------------
 # Setup the project

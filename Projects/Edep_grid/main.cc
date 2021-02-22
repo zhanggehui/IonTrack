@@ -66,7 +66,7 @@ int main(int argc,char** argv)
   if (ui) {
     visManager = new G4VisExecutive;
     visManager->Initialize();
-    UImanager->ApplyCommand("/control/execute ../Projects/Edep_grid/vis.mac");
+    UImanager->ApplyCommand("/control/execute ../Projects/Edep_grid/vis_init.mac");
     ui->SessionStart();
     delete ui;
   } 
