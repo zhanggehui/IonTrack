@@ -1,14 +1,11 @@
-/control/execute ./init.mac
+/control/execute ../init.mac
 
 /IonTrack/det/setFilmXY 1 m
 /IonTrack/det/setFilmZ  1 m
-/IonTrack/phys/addPhysics dna_sta_opt2 
+/IonTrack/phys/addPhysics dna_sta_opt2
 
 /run/initialize
 
 /gun/particle ion
 /gun/ion 14 28 
-/gun/energy 25 MeV
-
-/gun/energy 16000 keV
-/run/beamOn 1000
+/control/loop ../Projects/Stopping_power/multi_run.mac ene 16 100 2

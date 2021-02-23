@@ -36,8 +36,6 @@
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
 
-#include "RunConfig.h"
-
 #include "DetectorConstruction.hh"
 #include "PhysicsList.hh"
 #include "ActionInitialization.hh"
