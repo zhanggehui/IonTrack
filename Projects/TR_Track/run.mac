@@ -1,0 +1,57 @@
+#######################################
+/control/execute ../init.mac
+/run/initialize
+# when need visualization, then comment out the sentences above
+
+#/gun/particle proton 
+#/gun/energy 10 MeV
+
+/gun/particle ion
+#Li
+#/gun/ion 3 7 
+#/gun/energy 10 MeV
+#C
+#/gun/ion 6 12 
+#/gun/energy 22 MeV
+#N
+#/gun/ion 7 14 
+#/gun/energy 25 MeV
+#O
+#/gun/ion 8 16 
+#/gun/energy 29 MeV
+#Si
+/gun/ion 14 28 
+/gun/energy 50 MeV
+#Fe
+#/gun/ion 26 56 
+#/gun/energy 100 MeV
+
+
+/analysis/setFileName IonTrack
+
+##  time1  ###############
+/analysis/h1/set  0 1000 10 1000  eV
+/analysis/h1/set  1 1000 1 1000  nm
+/analysis/h1/set  2 1000 1 1000  nm
+
+##  time2  ###############
+/analysis/h1/set  3 1000 10 1000  eV
+/analysis/h1/set  4 1000 1 1000  nm
+/analysis/h1/set  5 1000 1 1000  nm
+
+##  time3  ###############
+/analysis/h1/set  6 1000 10 1000  eV
+/analysis/h1/set  7 1000 1 1000  nm
+/analysis/h1/set  8 1000 1 1000  nm
+
+##  time4  ###############
+/analysis/h1/set  9 1000 10 1000  eV
+/analysis/h1/set  10 1000 1 1000  nm
+/analysis/h1/set  11 1000 1 1000  nm
+
+/analysis/h1/set  12 1000 10 1000  eV        #Secondary Electron Spectrum
+#/analysis/h1/set 13  200 0 20 um            #Depth vs Stopping
+/analysis/h1/set  14 1000 1 1000  nm         #Edep Profile
+
+/run/printProgress 1
+/run/beamOn 1

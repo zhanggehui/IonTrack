@@ -1,5 +1,5 @@
 # Edep_grid TR_Track Stopping_power
-set(P_NAME Projects/Stopping_power)
+set(P_NAME Projects/TR_Track)
 
 #----------------------------------------------------------------------------
 # Setup the project
@@ -23,7 +23,7 @@ endif()
 #
 include(${Geant4_USE_FILE})
 
-option(CLUSTER_INCLUDE "Run on beijixing cluster" OFF)
+option(CLUSTER_INCLUDE "Run on beijixing cluster" ON)
 configure_file(${PROJECT_SOURCE_DIR}/RunConfig.h.in RunConfig.h)
 
 #----------------------------------------------------------------------------
